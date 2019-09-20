@@ -1,0 +1,60 @@
+#include <iostream>
+#include <conio.h>
+#include <string> //Библиотека для работы со строками в потоке
+#include <fstream> //Библиотека для работы с потоками
+#include <regex> //Библиотека для работы регулярных выражений
+#include <vector>  //Библиотека для работы с динамическими массивами
+#include <clocale>
+
+using namespace std; //Поделючить пространство имен std
+
+vector <string> vct; //Задать массив обработки 
+char path_to_file[100]; //Задать переменную, содержащую путь к файлу
+
+/*Эта функция читает файл выводит содержимое.
+На входе путь к файлу, на выходе - множество строк*/
+void inputtext()
+{
+	string line;
+	cout << "Введите путь к файлу: " << endl;
+	cin >> path_to_file;
+	cout << "Исходный текст: " << endl;
+	ifstream in(path_to_file); //Открыть файл для работы
+	{
+		while (getline(in, line)) //Пока не конец файла, построчно выводить
+		{
+			cout << line << endl; //Выводить строки из файла
+		}
+	}
+	in.close(); //Закрыть файл в потоке
+}
+
+/*Эта функция читает файл, изменяет содержимое
+по условию. На входе - путь к файлу, на выходе -
+множество измененных строкстрок */
+void changetext()
+{
+	string line;
+	cout << "Измененный текст: " << endl;
+	ifstream in(path_to_file); //Открыть файл для работы
+	{
+		while (getline(in, line)) //Пока не конец файла, построчно выводить
+		{
+			wstring str(line.begin(), line.end()); //Задать строковую переменную типа wstring для работы регулярных выражений
+			wregex reg(L"(?:P|p)ublic((?=[^A-Za-z])|$)"); //Задать условие отбора
+			wstring line1 = regex_replace(str, reg, L"private"); //Заменять совпадения согласно условию отбора
+			wcout << line1 << std::endl; //Вывести измененные данные
+		}
+	}
+	in.close(); //Закрыть файл в потоке
+}
+
+/*Это главная функция программы*/
+int main()
+{
+	setlocale(LC_ALL, "Russian"); //Установить русский язык в консоли
+	inputtext(); //Запустить выполнение функции void textseparator()
+	changetext(); //Запустить выполнение функции void changetext()
+	_getch(); //Задержать окно консоли
+	return 0; //Вернуть 0
+}
