@@ -1,0 +1,83 @@
+#include <iostream>
+#include <conio.h>
+#include <string> //Библиотека для работы со строками в потоке
+#include <fstream> //Библиотека для работы с потоками
+#include <regex> //Библиотека для работы регулярных выражений
+#include <vector>  //Библиотека для работы с динамическими массивами
+#include <math.h>
+#include <iomanip>
+
+using namespace std;
+
+void checkfile();
+void creatematrix();
+
+vector<string> vct; //Задать массив обработки 
+
+/*Эта функция принимает файл, сепарирует строки и заполняет целочисленный
+вектор. На входе - путь к файлу, на выходе - целочисленный вектор.*/
+void checkfile()
+{
+	char path_to_file[100];
+	string line;
+	cout << "Введите путь к файлу: " << endl;
+	cin >> path_to_file;
+	ifstream in(path_to_file); //Открыть файл для работы
+	regex rgx{ "[-[:digit:]]+" }; //Задать условие разделения на последовательности положительных и отрицательных цифр
+	while (getline(in, line)) //Пока не конец строки в потоке, выполнять
+	{
+		copy(sregex_token_iterator{ line.begin(), line.end(), rgx }, {}, back_inserter(vct)); //Сепарировать последовательность согласно условию и вносить в массив
+	}
+	in.close(); //Закрыть файл
+}
+
+/*Эта функция читает целочисленный вектор и выводи матрицу.
+На входе - целочисленный вектор, на выходе - сообщение и файл
+с результатом*/
+void creatematrix()
+{
+	int count = vct.size();
+	double count_sqrt = sqrt(count);
+	double celaya;
+	double drobnoe = modf(count_sqrt, &celaya);
+	if (drobnoe == 0)
+	{
+		cout << "Размерность матрицы: " << celaya << endl;
+	}
+	else
+	{
+		cout << "Не удалось определить размерность матрицы";
+	}
+	//int n = 4;//(int)celaya;
+	int row = 2;
+	int col = 2;
+	std::vector<std::vector<int> > imatrix(row, std::vector<int>(col, 0));
+	// Заполнение     
+	for (size_t i = 0; i < row; ++i)
+	{
+		imatrix[i].resize(col);
+		for (size_t j = 0; j < col; ++j)
+			imatrix[i][j] = stoi(vct[i*col + j]);
+	}
+	// Печать
+	for_each(imatrix.begin(), imatrix.end(), [](vector<int>& ivec)
+	{
+		for_each(ivec.begin(), ivec.end(), [](int i)
+		{
+			cout << left << setw(4) << i;
+		});
+		cout << std::endl;
+	});
+	//Вывод в файл
+	/////////////
+}
+
+/*Это главная функция программы*/
+int main()
+{
+	setlocale(LC_ALL, "Russian"); //Установить русский язык в консоли
+	checkfile();
+	creatematrix();
+	_getch(); //Задержать окно программы
+	return 0; //Вернуть 0
+}
