@@ -1,0 +1,92 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, IdBaseComponent,
+  IdComponent, IdTCPConnection, IdTCPClient, IdHTTP, Vcl.OleCtrls, SHDocVw,
+  IdRawBase, IdRawClient, IdIcmpClient;
+
+type
+  TForm1 = class(TForm)
+    Label1: TLabel;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Label2: TLabel;
+    Button1: TButton;
+    Memo1: TMemo;
+    IdHTTP1: TIdHTTP;
+    IdIcmpClient1: TIdIcmpClient;
+    Label3: TLabel;
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+{Эта процедура получает диапазон IP адресов и сканирует сеть. На входе массив IP-адресов, на выходе список активных IP-адресов}
+procedure TForm1.Button1Click(Sender: TObject);
+var
+start, ending : string;
+str : string;
+s1, s2 : TStringList;
+i : integer;
+current_value_0, current_value_1, current_value_2, current_value_3 : integer;
+sTime: string;
+begin
+s1 := TStringList.Create;
+s2 := TStringList.Create;
+start:=Edit1.Text;
+ending:=Edit2.Text;
+s1.Delimiter :='.'; //разделитель между словами "."
+s1.DelimitedText :=Edit1.Text; //разделяемый текст, взятый из текстового поля
+s2.Delimiter :='.'; //разделитель между словами "."
+s2.DelimitedText :=Edit2.Text; //разделяемый текст, взятый из текстового поля
+current_value_0 := StrToInt(s1.Strings[0]);
+current_value_1 := StrToInt(s1.Strings[1]);
+current_value_2 := StrToInt(s1.Strings[2]);
+current_value_3 := StrToInt(s1.Strings[3]);
+{Реализован бесконечный цикл, который формирует список адресов по диапазону}
+while (i < 10)  do    //Бесконечный цикл
+begin
+  str :='';
+  inc(current_value_3);
+  if ((current_value_3) > 255) then
+		begin
+			current_value_3 := 0;
+			inc(current_value_2);
+		end;
+		if (current_value_2 > 255) then
+		begin
+			current_value_2 := 0;
+			inc(current_value_1);
+		end;
+		if (current_value_1 > 255) then
+		begin
+			current_value_1 := 0;
+			inc(current_value_0);
+		end;
+		if (current_value_0 > 255) then
+    break;
+    str:= IntToStr(current_value_0)+'.'+IntToStr(current_value_1)+'.'+IntToStr(current_value_2)+'.'+IntToStr(current_value_3);
+    IdIcmpClient1.Host:=str;//Присвоить хосту текущий адрес
+    IdIcmpClient1.Ping; //Пинговать хост
+    if IdIcmpClient1.ReplyStatus.ReplyStatusType=rsEcho //Если ответ получен
+    then
+    Memo1.Lines.Add(str);   //Вывести результат
+    {Условие, при котором бесконечный цикл прерывается}
+    if (current_value_0 = StrToInt(s2.Strings[0])) AND (current_value_1 = StrToInt(s2.Strings[1])) AND (current_value_2 = StrToInt(s2.Strings[2])) AND (current_value_3 = StrToInt(s2.Strings[3])) then
+    break;
+end;
+end;
+
+end.
