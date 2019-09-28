@@ -1,0 +1,54 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, IdBaseComponent,
+  IdComponent, IdTCPConnection, IdTCPClient, IdExplicitTLSClientServerBase,
+  IdFTP;
+
+type
+  TForm1 = class(TForm)
+    Memo1: TMemo;
+    Button1: TButton;
+    IdFTP1: TIdFTP;
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+{Эта процедура обрабатывает нажатие кнопки}
+procedure TForm1.Button1Click(Sender: TObject);
+var i, int: integer;
+begin
+// Получить целое случайное число в диапазоне 1..7
+int := 1 + Random(7);
+// Подключиться к серверу по Хосту, Порту, Логину и Паролю
+IdFTP1.Host:='192.168.1.164';
+IdFTP1.Port:=21;
+IdFTP1.Username:='root';
+IdFTP1.Password:='root';
+IdFTP1.Connect();
+// Задержать на 60 мс
+sleep(60);
+// Открыть рабочую директорию
+      idFTP1.ChangeDir('192.168.1.164');
+      idFTP1.ChangeDir('Sonet');
+// Скачать файл
+idFTP1.Get(IntToStr(int)+'.txt', 'e:/'+IntToStr(int)+'.txt', True);
+// Открыть файл и вывести его содержимое
+Memo1.Lines.LoadFromFile('e:/'+IntToStr(int)+'.txt');
+// Закрыть соединение
+idFTP1.Disconnect;
+end;
+
+end.
