@@ -1,0 +1,195 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.Win.ScktComp;
+
+type
+  TForm1 = class(TForm)
+    ClientSocket1: TClientSocket;
+    ServerSocket1: TServerSocket;
+    Port: TEdit;
+    Host: TEdit;
+    Name: TEdit;
+    Send: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Memo: TMemo;
+    ServerOn: TButton;
+    Client: TButton;
+    SendText: TButton;
+    ServerOff: TButton;
+    procedure FormCreate(Sender: TObject);
+    procedure ServerOnClick(Sender: TObject);
+    procedure ServerOffClick(Sender: TObject);
+    procedure ServerSocket1ClientConnect(Sender: TObject;
+      Socket: TCustomWinSocket);
+    procedure ServerSocket1ClientDisconnect(Sender: TObject;
+      Socket: TCustomWinSocket);
+    procedure ServerSocket1ClientRead(Sender: TObject;
+      Socket: TCustomWinSocket);
+    procedure SendTextClick(Sender: TObject);
+    procedure ClientClick(Sender: TObject);
+    procedure ClientSocket1Read(Sender: TObject; Socket: TCustomWinSocket);
+    procedure ClientSocket1Connecting(Sender: TObject;
+      Socket: TCustomWinSocket);
+    procedure ClientSocket1Disconnect(Sender: TObject;
+      Socket: TCustomWinSocket);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+{Эта процедура обрабатывает нажатие кнопки "Подключиться}
+procedure TForm1.ClientClick(Sender: TObject);
+begin
+If Client.Tag=0 then
+Begin
+// Заблокировать кнопки
+ServerOff.Enabled:=False;
+ServerOn.Enabled:=False;
+Host.Enabled:=False;
+Port.Enabled:=False;
+// Записать указанный порт в ClientSocket
+ClientSocket1.Port:=StrToInt(Port.Text);
+// Запишем хост и адрес в поля ввода
+ClientSocket1.Host:=Host.Text;
+ClientSocket1.Address:=Host.Text;
+// Активация клиента
+ClientSocket1.Active:=True;
+// Задать тег клиента
+Client.Tag:=1;
+// Изменить название кнопки
+Client.Caption:='Отключиться';
+end
+else
+Begin
+// Заблокировать все кнопки, кроме ServerOff
+ServerOn.Enabled:=True;
+ServerOff.Enabled:=False;
+Host.Enabled:=True;
+Port.Enabled:=True;
+// Деактивировать клиент
+ClientSocket1.Active:=False;
+// Вывести сообщение
+Memo.Lines.Add('['+TimeToStr(Time)+'] Сессия закрыта');
+// Присвоить тегу 0
+Client.Tag:=0;
+// Присвоить кнопке имя
+Client.Caption:='Подключиться';
+end;
+end;
+ {Эта процедура обрабатывает событие соединения}
+procedure TForm1.ClientSocket1Connecting(Sender: TObject;
+  Socket: TCustomWinSocket);
+begin
+// Вывести в Memo сообщение о соединении с сервером
+Memo.Lines.Add('['+TimeToStr(Time)+'] Подключение к серверу');
+end;
+ {Эта процедура обрабатывает событие дисконнекта}
+procedure TForm1.ClientSocket1Disconnect(Sender: TObject;
+  Socket: TCustomWinSocket);
+begin
+// Вывести в Memo сообщение о потере связи
+Memo.Lines.Add('['+TimeToStr(Time)+'] Сервер не был найден.');
+end;
+
+ {Эта процедура обрабатывает событие чтение поступившего сообщения}
+procedure TForm1.ClientSocket1Read(Sender: TObject; Socket: TCustomWinSocket);
+begin
+// Вывести в Memo пришедшее сообщение
+Memo.Lines.Add(Socket.ReceiveText());
+end;
+  {Эта процедура обрабатывает событие создания формы}
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+Port.Text:='777';
+// При проверке программы на одном ПК
+Host.Text:='127.0.0.1';
+Name.Text:='NickName';
+// Очистить Memo и Send
+Send.Clear;
+Memo.Lines.Clear;
+//Звблокировать кнопку "Закрыть сервер
+ServerOff.Enabled:=False;
+end;
+ {Эта процедура обрабатывает событие нажатия кнопки отправки сообщения}
+procedure TForm1.SendTextClick(Sender: TObject);
+begin
+// Если подключение активно,то
+If ServerSocket1.Active=True then
+// Отправить сообщение с сервера
+ServerSocket1.Socket.Connections[0].SendText('['+TimeToStr(Time)+'] '+Name.Text+': '+Send.Text)
+// Иначе
+else
+// Отправить сообщение с клиента
+ClientSocket1.Socket.SendText('['+TimeToStr(Time)+'] '+Name.Text+': '+Send.Text);
+// Выводить сообщения в Memo
+Memo.Lines.Add('['+TimeToStr(Time)+'] '+Name.Text+': '+Send.Text);
+end;
+
+ {Эта процедура обрабатывает событие нажатия на кнопку "Закрыть сервер"}
+procedure TForm1.ServerOffClick(Sender: TObject);
+Begin
+// Разблокировать поля, заблокировать кнопку "Выключить сервер
+Client.Enabled:=True;
+Host.Enabled:=True;
+Port.Enabled:=True;
+ServerOff.Enabled:=False;
+ServerOn.Enabled:=True;
+// Закрыть подключение
+ServerSocket1.Active:=False;
+// Вывести сообщение в Memo
+Memo.Lines.Add('['+TimeToStr(Time)+'] Сервер закрыт');
+end;
+{Эта процедура обрабатывает событие нажатия на кнопку "Создать сервер"}
+procedure TForm1.ServerOnClick(Sender: TObject);
+Begin
+// Заблокировать Client, ServerOn и поля Host, Port
+// Разблокировать кнопку ServerOff
+ServerOn.Enabled:=False;
+Client.Enabled:=False;
+Host.Enabled:=False;
+Port.Enabled:=False;
+ServerOff.Enabled:=True;
+// Записать указанный порт в ServerSocket
+ServerSocket1.Port:=StrToInt(Port.Text);
+// Активировать сервер
+ServerSocket1.Active:=True;
+// Вывести в Memo сообщение с временем создания
+Memo.Lines.Add('['+TimeToStr(Time)+'] Сервер создан');
+end;
+ {Эта процедура обрабатывает событие подключения пользователя}
+procedure TForm1.ServerSocket1ClientConnect(Sender: TObject;
+Socket: TCustomWinSocket);
+begin
+// Вывести в Memo сообщение с временем подключения пользователя
+Memo.Lines.Add('['+TimeToStr(Time)+'] Подключился пользователь');
+end;
+{Эта процедура обрабатывает событие отключения пользователя}
+procedure TForm1.ServerSocket1ClientDisconnect(Sender: TObject;
+Socket: TCustomWinSocket);
+begin
+// Вывести в Memo сообщение с временем отключения пользователя
+Memo.Lines.Add('['+TimeToStr(Time)+'] Пользователь отключился.');
+end;
+ {Эта процедура обрабатывает сообщения пользователя}
+procedure TForm1.ServerSocket1ClientRead(Sender: TObject;
+Socket: TCustomWinSocket);
+begin
+// Вывести в Memo клиентское сообщение
+Memo.Lines.Add(Socket.ReceiveText());
+end;
+
+end.
