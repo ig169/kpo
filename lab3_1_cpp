@@ -1,0 +1,112 @@
+#include <iostream>
+#include <conio.h>
+#include <regex> //Библиотека для работы регулярных выражений
+#include <string> //Библиотека для работы со строками в потоке
+#include <algorithm> //Библиотека функций для выполнения алгоритмических операций над контейнерами и над другими последовательностями
+#include <iterator> //Библиотека для работы итератора регулярных выражений
+#include <vector>  //Библиотека для работы с динамическими массивами
+#include <fstream> //Библиотека для работы с потоками
+//Подключить библиотеку boost asio для пингования айпишника
+
+
+using namespace std;
+
+vector <string> vct;
+vector <int> digits; //Динамический целочисленный массив
+vector <string> ips; //Вектор Айпишников
+
+/*Эта функция получает пару строк (начальный и конечный диапазон IP-адресов,
+генерирует вектор IP-адресов по заданному диапазону. На входе - две строки,
+на выходе - вектор айпишников*/
+void inputdata()
+{
+	string begin; string end;
+	cout << "введите диапазон IP-адресов для сканирования: " << endl;
+	cout << "Начальное значение: ";
+	cin >> begin;
+	cout << "Конечное значение: ";
+	cin >> end;
+	//Проверка на правильность
+	regex rgx{ "[[:digit:]]+" };
+	//std::copy(std::sregex_token_iterator{ begin.begin(), begin.end(), rgx }, {}, std::ostream_iterator<std::ssub_match>{std::cout, "\n"});
+	//Задать массив обработки 
+	vector<ssub_match> vct; 
+	//Сепарировать последовательность согласно условию и вносить в массив
+	copy(sregex_token_iterator{ begin.begin(), begin.end(), rgx }, {}, back_inserter(vct)); 
+	//Перебрать все значения динамического массива																					
+	for (int i = 0; i < vct.size(); i++) 
+	{
+		//Преобразовать элемент массива строк в число и добавить в целочисленный массив
+		digits.push_back(stoi(vct[i])); 
+	}
+	//Очистить вектор
+	vct.clear();
+	//Сепарировать последовательность согласно условию и вносить в массив
+	copy(sregex_token_iterator{ end.begin(), end.end(), rgx }, {}, back_inserter(vct)); 
+	//Перебрать все значения динамического массива
+	for (int i = 0; i < vct.size(); i++)
+	{
+		//Преобразовать элемент массива строк в число и добавить в целочисленный массив
+		digits.push_back(stoi(vct[i])); 
+	}
+	vct.clear();
+	//проверка
+	for (int i = 0; i < digits.size(); i++)
+	{
+		if ((digits[i] > 255) || ((digits[0] > digits[4]) && (digits[1] > digits[5]) && (digits[2] > digits[6]) && (digits[3] > digits[7])) || (digits.size() != 8))
+		{
+			cout << "Диапазон IP-адресов задан некорректно." << endl;
+			break;
+			exit;
+		}
+	}
+	int current_value_0 = digits[0];
+	int current_value_1 = digits[1];
+	int current_value_2 = digits[2];
+	int current_value_3 = digits[3];
+	ips.push_back(begin);
+	while (!((current_value_0 == digits[4]) && (current_value_1 == digits[5]) && (current_value_2 == digits[6]) && (current_value_3 == digits[7])))
+	{
+		string str = "";
+		if (++current_value_3 > 255)
+		{
+			current_value_3 = 0;
+			current_value_2++;
+		}
+		if (current_value_2 > 255)
+		{
+			current_value_2 = 0;
+			current_value_1++;
+		}
+		if (current_value_1 > 255)
+		{
+			current_value_1 = 0;
+			current_value_0++;
+		}
+		if (current_value_0 > 255)
+			break;
+		str = to_string(current_value_0) +"."+ to_string(current_value_1) +"."+ to_string(current_value_2) +"." + to_string(current_value_3);
+		ips.push_back(str);
+
+	}
+	//copy(ips.begin(), ips.end(), ostream_iterator<string>{cout, "\n"});
+}
+
+void checkip()
+{
+	//От первого элемента вектора до последнего выполнять
+	//Отправить запрос на i-тый айпишник
+	//Если пинг i-го айпишника не равен 0, то
+	//Вывести в консоль этот айпишник + текст "активен"
+	//Иначе
+	//Вывести в консоль этот айпишник + текст "неактивен"
+}
+
+int main()
+{
+	setlocale(LC_ALL, "Russian"); //Установить русский язык в консоли
+	inputdata();
+	checkip();
+	_getch(); //Задержать окно программы
+	return 0; //Вернуть 0
+}
