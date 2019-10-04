@@ -1,0 +1,52 @@
+#include <iostream>
+#include <mysql.h>
+#include <conio.h>
+
+using namespace std;
+
+MYSQL mysql;
+MYSQL_RES *res;
+MYSQL_ROW row;
+
+/*Функция, возвращающая соединение*/
+int connect()
+{
+	if (!mysql_init(&mysql))
+	{
+		cout << "Ошибка соединения с БД" << endl;
+		return 0;
+	}
+	if (!(mysql_real_connect(&mysql, "localhost", "root", "root", "lab004", 3306, NULL, 0)))
+	{
+		cout << "Неверные данные учетной записи" << endl;
+		return 0;
+	}
+	if (mysql_select_db(&mysql, "lab004"))
+	{
+		cout << "БД не существует" << endl;
+		return 0;
+	}
+}
+
+/*Функция, выполняющая запрос*/
+int outpt()
+{
+	string request;
+	if (mysql_query(&mysql, "SELECT * FROM lab41")) return 0;
+	unsigned int i = 0;
+	if (!(res = mysql_store_result(&mysql))) return 0;
+	while ((row = mysql_fetch_row(res))) {
+		for (i = 0; i < mysql_num_fields(res); i++)
+			cout << row[i] << "\t";
+		cout << endl;
+	}
+	if (!mysql_eof(res)) return 0;
+	mysql_free_result(res);
+	mysql_close(&mysql);
+}
+
+int main() {
+	connect();
+	outpt();
+	_getch();
+}
