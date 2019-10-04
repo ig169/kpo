@@ -16,37 +16,45 @@ int connect()
 		cout << "Ошибка соединения с БД" << endl;
 		return 0;
 	}
-	if (!(mysql_real_connect(&mysql, "localhost", "root", "root", "lab004", 3306, NULL, 0)))
+	if (!(mysql_real_connect(&mysql, "localhost", "root", "root", "lab_4", 3306, NULL, 0)))
 	{
 		cout << "Неверные данные учетной записи" << endl;
 		return 0;
 	}
-	if (mysql_select_db(&mysql, "lab004"))
+	if (mysql_select_db(&mysql, "lab_4"))
 	{
 		cout << "БД не существует" << endl;
 		return 0;
 	}
 }
 
-/*Функция, выполняющая запрос*/
+/*Функция, выполняющая любой запрос и выводящая результат в консоль*/
 int outpt()
 {
-	string request;
-	if (mysql_query(&mysql, "SELECT * FROM lab41")) return 0;
+	/*mysql_query() принимает два параметра: дескриптор соединения и запрос, на выходе return 0*/
+	if (mysql_query(&mysql, "SELECT * FROM Subjects")) return 0;
 	unsigned int i = 0;
+	/*mysql_store_result() читает весь результат запроса клиенту*/
 	if (!(res = mysql_store_result(&mysql))) return 0;
+	/*Цикл вывода результата запроса на консоль*/
 	while ((row = mysql_fetch_row(res))) {
 		for (i = 0; i < mysql_num_fields(res); i++)
 			cout << row[i] << "\t";
 		cout << endl;
 	}
+	/*mysql_eof() определяет, была ли данная строка последней из прочитанных в результирующем наборе данных*/
 	if (!mysql_eof(res)) return 0;
+	/*mysql_free_result() освобождает память*/
 	mysql_free_result(res);
+	/*mysql_close() закрывает содинение*/
 	mysql_close(&mysql);
 }
 
+/*Главная функция программы*/
 int main() {
+	setlocale(LC_ALL, "Russian");
 	connect();
 	outpt();
 	_getch();
+	return 0;
 }
