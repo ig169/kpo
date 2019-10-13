@@ -1,0 +1,47 @@
+<Tariffs>
+    <Name name="Моя Украина">
+        <OperatorName>Киевстар</OperatorName>
+        <Payroll>0</Payroll>>
+        <CallPrices>
+            <Inside>0,5</Inside>
+            <Outside>4</Outside>
+            <Stationary>0</Stationary>
+        </CallPrices>
+        <SMSPrice>0,9</SMSPrice>
+        <Parametrs>
+            <FavoriteNumber>Есть</FavoriteNumber>
+            <Tariffication>Поминутная</Tariffication>
+            <TarrifConnectionFee>20</TarrifConnectionFee>
+        </Parametrs>
+    </Name>
+    <Name name="Социальный">
+        <OperatorName>Интертелеком</OperatorName>
+        <Payroll>100</Payroll>>
+        <CallPrices>
+            <Inside>0,5</Inside>
+            <Outside>1,5</Outside>
+            <Stationary>1</Stationary>
+        </CallPrices>
+        <SMSPrice>0,5</SMSPrice>
+        <Parametrs>
+            <FavoriteNumber>Нет</FavoriteNumber>
+            <Tariffication>12-секундная</Tariffication>
+            <TarrifConnectionFee>0</TarrifConnectionFee>
+        </Parametrs>
+    </Name>
+    <Name name="Онлайн">
+        <OperatorName>Киевстар</OperatorName>
+        <Payroll>150</Payroll>>
+        <CallPrices>
+            <Inside>0,1</Inside>
+            <Outside>0,1</Outside>
+            <Stationary>1</Stationary>
+        </CallPrices>
+        <SMSPrice>0,1</SMSPrice>
+        <Parametrs>
+            <FavoriteNumber>Нет</FavoriteNumber>
+            <Tariffication>Поминутная</Tariffication>
+            <TarrifConnectionFee>0</TarrifConnectionFee>
+        </Parametrs>
+    </Name>
+</Tariffs>
