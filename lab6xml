@@ -1,0 +1,17 @@
+<Raspisanie>
+    <Name name="Раписание">
+        <Predmeti>
+			<Name predmet="Название предмета">
+			<Predmettime>Дни недели</Predmettime>
+			<Auditorii>Аудитории</Auditorii>
+			</Name>
+        </Predmeti>
+		<Prepodi>
+			<Name prepod="Ф.И.О.">
+			<Predmets>Предметы</Predmets>
+			<CountPari>Предметы</CountPari>
+			<CountStudents>Количество предметов</CountStudents>
+			</Name>
+        </Prepodi>
+	</Name>
+</Raspisanie>
