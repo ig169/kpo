@@ -1,0 +1,181 @@
+using System;
+using System.ComponentModel;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
+using System.Numerics;
+using LiquidTechnologies.XmlObjects;
+using LiquidTechnologies.XmlObjects.Attribution;
+
+// ------------------------------------------------------
+// |                      Settings                      |
+// ------------------------------------------------------
+// GenerateCommonBaseClass                  = False
+// GenerateUnprocessedNodeHandlers          = False
+// Language                                 = CS
+// OutputNamespace                          = LiquidTechnologies.GeneratedLx
+// WriteDefaultValuesForOptionalAttributes  = False
+// WriteDefaultValuesForOptionalElements    = False
+// GenerationModel                          = Simple
+//                                            *WARNING* this simplified model that is very easy to work with
+//                                            but may cause the XML to be produced without regard for element
+//                                            cardinality or order. Where very high compliance with the XML Schema
+//                                            standard is required use GenerationModelType.Conformant
+// XSD Schema Files
+//    file://sandbox/schema.xsd
+
+
+namespace LiquidTechnologies.GeneratedLx
+{
+    #region Global Settings
+    /// <summary>Contains library level properties, and ensures the version of the runtime used matches the version used to generate it.</summary>
+    [LxRuntimeRequirements("17.0.6.9344", "Free Community Edition", "M9WDQLWDQNEEVNLX", LiquidTechnologies.XmlObjects.LicenseTermsType.CommunityEdition)]
+    public partial class LxRuntimeRequirementsWritten
+    {
+    }
+
+    #endregion
+
+}
+
+namespace LiquidTechnologies.GeneratedLx.Xs
+{
+    #region Complex Types
+    /// <summary>A class representing the root XSD complexType anyType@http://www.w3.org/2001/XMLSchema</summary>
+    /// <XsdPath>schema:.../www.w3.org/2001/XMLSchema/complexType:anyType</XsdPath>
+    /// <XsdFile>http://www.w3.org/2001/XMLSchema</XsdFile>
+    /// <XsdLocation>Empty</XsdLocation>
+    [LxSimpleComplexTypeDefinition("anyType", "http://www.w3.org/2001/XMLSchema")]
+    public partial class AnyTypeCt : XElement
+    {
+        /// <summary>Constructor : create a <see cref="AnyTypeCt" /> element &lt;anyType xmlns='http://www.w3.org/2001/XMLSchema'&gt;</summary>
+        public AnyTypeCt()  : base(XName.Get("anyType", "http://www.w3.org/2001/XMLSchema")) { }
+
+    }
+
+    #endregion
+
+}
+
+namespace LiquidTechnologies.GeneratedLx.Ns
+{
+    #region Elements
+    /// <summary>A class representing the root XSD element Raspisanie</summary>
+    /// <XsdPath>schema:schema.xsd/element:Raspisanie</XsdPath>
+    /// <XsdFile>file://sandbox/schema.xsd</XsdFile>
+    /// <XsdLocation>4:3-47:16</XsdLocation>
+    [LxSimpleElementDefinition("Raspisanie", "", ElementScopeType.GlobalElement)]
+    public partial class RaspisanieElm
+    {
+        /// <summary>A <see cref="LiquidTechnologies.GeneratedLx.Ns.RaspisanieElm.NameElm" />, Required : should not be set to null</summary>
+        [LxElementRef(MinOccurs = 1, MaxOccurs = 1)]
+        public LiquidTechnologies.GeneratedLx.Ns.RaspisanieElm.NameElm Name { get; set; } = new LiquidTechnologies.GeneratedLx.Ns.RaspisanieElm.NameElm();
+
+        /// <summary>Represent the inline xs:element Name.</summary>
+        /// <XsdPath>schema:schema.xsd/element:Raspisanie/sequence/element:Name</XsdPath>
+        /// <XsdFile>file://sandbox/schema.xsd</XsdFile>
+        /// <XsdLocation>7:9-44:22</XsdLocation>
+        [LxSimpleElementDefinition("Name", "", ElementScopeType.InlineElement)]
+        public partial class NameElm
+        {
+            /// <summary>The value for the attribute name</summary>
+            /// <XsdPath>schema:schema.xsd/element:Raspisanie/sequence/element:Name/attribute:name</XsdPath>
+            /// <XsdFile>file://sandbox/schema.xsd</XsdFile>
+            /// <XsdLocation>42:13-42:73</XsdLocation>
+            [LxAttribute("name", "", LxValueType.Value, XsdType.XsdString, Required = true)]
+            public System.String Name { get; set; } = "";
+
+            /// <summary>A <see cref="LiquidTechnologies.GeneratedLx.Ns.RaspisanieElm.NameElm.PredmetiElm" />, Required : should not be set to null</summary>
+            [LxElementRef(MinOccurs = 1, MaxOccurs = 1)]
+            public LiquidTechnologies.GeneratedLx.Ns.RaspisanieElm.NameElm.PredmetiElm Predmeti { get; set; } = new LiquidTechnologies.GeneratedLx.Ns.RaspisanieElm.NameElm.PredmetiElm();
+
+            /// <summary>A <see cref="LiquidTechnologies.GeneratedLx.Ns.RaspisanieElm.NameElm.PrepodiElm" />, Required : should not be set to null</summary>
+            [LxElementRef(MinOccurs = 1, MaxOccurs = 1)]
+            public LiquidTechnologies.GeneratedLx.Ns.RaspisanieElm.NameElm.PrepodiElm Prepodi { get; set; } = new LiquidTechnologies.GeneratedLx.Ns.RaspisanieElm.NameElm.PrepodiElm();
+
+            /// <summary>Represent the inline xs:element Predmeti.</summary>
+            /// <XsdPath>schema:schema.xsd/element:Raspisanie/sequence/element:Name/sequence/element:Predmeti</XsdPath>
+            /// <XsdFile>file://sandbox/schema.xsd</XsdFile>
+            /// <XsdLocation>10:15-24:28</XsdLocation>
+            [LxSimpleElementDefinition("Predmeti", "", ElementScopeType.InlineElement)]
+            public partial class PredmetiElm
+            {
+                /// <summary>A <see cref="LiquidTechnologies.GeneratedLx.Ns.RaspisanieElm.NameElm.PredmetiElm.NameElm" />, Required : should not be set to null</summary>
+                [LxElementRef(MinOccurs = 1, MaxOccurs = 1)]
+                public LiquidTechnologies.GeneratedLx.Ns.RaspisanieElm.NameElm.PredmetiElm.NameElm Name { get; set; } = new LiquidTechnologies.GeneratedLx.Ns.RaspisanieElm.NameElm.PredmetiElm.NameElm();
+
+                /// <summary>Represent the inline xs:element Name.</summary>
+                /// <XsdPath>schema:schema.xsd/element:Raspisanie/sequence/element:Name/sequence/element:Predmeti/sequence/element:Name</XsdPath>
+                /// <XsdFile>file://sandbox/schema.xsd</XsdFile>
+                /// <XsdLocation>13:21-21:34</XsdLocation>
+                [LxSimpleElementDefinition("Name", "", ElementScopeType.InlineElement)]
+                public partial class NameElm
+                {
+                    /// <summary>The value for the attribute predmet</summary>
+                    /// <XsdPath>schema:schema.xsd/element:Raspisanie/sequence/element:Name/sequence/element:Predmeti/sequence/element:Name/attribute:predmet</XsdPath>
+                    /// <XsdFile>file://sandbox/schema.xsd</XsdFile>
+                    /// <XsdLocation>19:25-19:88</XsdLocation>
+                    [LxAttribute("predmet", "", LxValueType.Value, XsdType.XsdString, Required = true)]
+                    public System.String Predmet { get; set; } = "";
+
+                    /// <summary>A <see cref="System.String" />, Required : should not be set to null</summary>
+                    [LxElementValue("Predmettime", "", LxValueType.Value, XsdType.XsdString, MinOccurs = 1, MaxOccurs = 1)]
+                    public System.String Predmettime { get; set; } = "";
+
+                    /// <summary>A <see cref="System.String" />, Required : should not be set to null</summary>
+                    [LxElementValue("Auditorii", "", LxValueType.Value, XsdType.XsdString, MinOccurs = 1, MaxOccurs = 1)]
+                    public System.String Auditorii { get; set; } = "";
+
+                }
+
+            }
+
+            /// <summary>Represent the inline xs:element Prepodi.</summary>
+            /// <XsdPath>schema:schema.xsd/element:Raspisanie/sequence/element:Name/sequence/element:Prepodi</XsdPath>
+            /// <XsdFile>file://sandbox/schema.xsd</XsdFile>
+            /// <XsdLocation>25:15-40:28</XsdLocation>
+            [LxSimpleElementDefinition("Prepodi", "", ElementScopeType.InlineElement)]
+            public partial class PrepodiElm
+            {
+                /// <summary>A <see cref="LiquidTechnologies.GeneratedLx.Ns.RaspisanieElm.NameElm.PrepodiElm.NameElm" />, Required : should not be set to null</summary>
+                [LxElementRef(MinOccurs = 1, MaxOccurs = 1)]
+                public LiquidTechnologies.GeneratedLx.Ns.RaspisanieElm.NameElm.PrepodiElm.NameElm Name { get; set; } = new LiquidTechnologies.GeneratedLx.Ns.RaspisanieElm.NameElm.PrepodiElm.NameElm();
+
+                /// <summary>Represent the inline xs:element Name.</summary>
+                /// <XsdPath>schema:schema.xsd/element:Raspisanie/sequence/element:Name/sequence/element:Prepodi/sequence/element:Name</XsdPath>
+                /// <XsdFile>file://sandbox/schema.xsd</XsdFile>
+                /// <XsdLocation>28:21-37:34</XsdLocation>
+                [LxSimpleElementDefinition("Name", "", ElementScopeType.InlineElement)]
+                public partial class NameElm
+                {
+                    /// <summary>The value for the attribute prepod</summary>
+                    /// <XsdPath>schema:schema.xsd/element:Raspisanie/sequence/element:Name/sequence/element:Prepodi/sequence/element:Name/attribute:prepod</XsdPath>
+                    /// <XsdFile>file://sandbox/schema.xsd</XsdFile>
+                    /// <XsdLocation>35:25-35:87</XsdLocation>
+                    [LxAttribute("prepod", "", LxValueType.Value, XsdType.XsdString, Required = true)]
+                    public System.String Prepod { get; set; } = "";
+
+                    /// <summary>A <see cref="System.String" />, Required : should not be set to null</summary>
+                    [LxElementValue("Predmets", "", LxValueType.Value, XsdType.XsdString, MinOccurs = 1, MaxOccurs = 1)]
+                    public System.String Predmets { get; set; } = "";
+
+                    /// <summary>A <see cref="System.String" />, Required : should not be set to null</summary>
+                    [LxElementValue("CountPari", "", LxValueType.Value, XsdType.XsdString, MinOccurs = 1, MaxOccurs = 1)]
+                    public System.String CountPari { get; set; } = "";
+
+                    /// <summary>A <see cref="System.String" />, Required : should not be set to null</summary>
+                    [LxElementValue("CountStudents", "", LxValueType.Value, XsdType.XsdString, MinOccurs = 1, MaxOccurs = 1)]
+                    public System.String CountStudents { get; set; } = "";
+
+                }
+
+            }
+
+        }
+
+    }
+
+    #endregion
+
+}
+
