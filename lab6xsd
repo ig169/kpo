@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid Technologies Online Tools 1.0 (https://www.liquid-technologies.com) -->
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Raspisanie">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Name">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Predmeti">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Name">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Predmettime" type="xs:string" />
+                          <xs:element name="Auditorii" type="xs:string" />
+                        </xs:sequence>
+                        <xs:attribute name="predmet" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Prepodi">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Name">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Predmets" type="xs:string" />
+                          <xs:element name="CountPari" type="xs:string" />
+                          <xs:element name="CountStudents" type="xs:string" />
+                        </xs:sequence>
+                        <xs:attribute name="prepod" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
