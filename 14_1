@@ -1,0 +1,49 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Net;
+using System.IO;
+
+namespace kpo14
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            //Генератор случайного числа для выбора сонет
+            Random rand = new Random();
+            int a = rand.Next(1, 3);
+            //Запрос получения документа
+            xDoc.Load("http://localhost/"+a+"/Sonet.xml");
+            //Получить корневой элемент
+            XmlElement xRoot = xDoc.DocumentElement;
+            //Обойти все узлы в корневом элементе
+            foreach (XmlNode xnode in xRoot)
+            {
+                //Получить атрибут "name"
+                if (xnode.Attributes.Count > 0)
+                {
+                    XmlNode attr = xnode.Attributes.GetNamedItem("name");
+                    if (attr != null)
+                        Console.WriteLine(attr.Value);
+                }
+                //Обойти все дочерние узлы корневого элемента
+                foreach (XmlNode childnode in xnode.ChildNodes)
+                {
+                    //Если узел - text
+                    if (childnode.Name == "text")
+                    {
+                        //Выводить результат
+                        Console.WriteLine($"{childnode.InnerText}");
+                    }
+                }
+                Console.WriteLine();
+            }
+            Console.Read();
+        }
+    }
+}
