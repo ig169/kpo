@@ -1,55 +1,183 @@
-#include <iostream>
-#include <conio.h>
-#include <string> //Библиотека для работы со строками в потоке
-#include <fstream> //Библиотека для работы с потоками
-#include <regex> //Библиотека для работы регулярных выражений
-#include <vector>  //Библиотека для работы с динамическими массивами
+using System;
+using System.Collections.Generic;
 
-using namespace std; //Поделючить пространство имен std
-
-vector <string> vct; //Задать массив обработки 
-
-/*Эта функция читает файл и заносит его содержимое в строковый вектор.
-На выходе путь к файлу, на выходе вектор с содержимым файла.*/
-void textseparator()
+namespace ConsoleApp1
 {
-	regex rgx{ "[\\S]+" }; //Задать условие разделения на последовательности положительных и отрицательных цифр
-	char path_to_file[100]; 
-	string line;
-	cout << "Введите путь к файлу: " << endl;
-	cin >> path_to_file;
-	cout << "Исходный текст: " << endl;
-	ifstream in(path_to_file); //Открыть файл для работы
-	{
-		while (getline(in, line)) //Пока не конец файла, построчно выводить
-		{
-			cout << line << endl; //Выводить строки из файла
-			copy(sregex_token_iterator{ line.begin(), line.end(), rgx }, {}, back_inserter(vct)); //Сепарировать последовательность согласно условию и вносить в массив
-		}
-	}
-	in.close(); //Закрыть файл
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //входное слово
+            var in_string = "ABABAC";
+            //начальное состояние
+            var current_state = 0;
+            //создние массива, который будет использоваться в качестве стека
+            var stack = new List<string>();
+            //состояние автомата
+            int state = 0;
+            for (int i = 0; i < in_string.Length; i++)
+            {
+                current_state = newState(current_state, in_string[i]);
+            }
+            //вывод результата
+            Console.WriteLine("Входная строка: ");
+            Console.WriteLine(in_string);
+            Console.WriteLine("<br/>");
+            Console.WriteLine("Конечное состояние: ");
+            Console.WriteLine(current_state);
+        }
+
+        public object newState(int state, string literal)
+        {
+            var result = 0;
+            switch (state)
+            {
+                case 0:
+                    switch (literal) 
+                      {
+                    case "A":
+                    result = 1;
+                    break;
+                case "B":
+                case "C":
+                    result = 0;
+                    break;
+                default:
+                    break;
+            }
+            break;
+            case 1:
+                switch (literal)
+                {
+                case "A":
+                    result = 1;
+                    break;
+                case "B":
+                    result = 2;
+                    break;
+                case "C":
+                    result = 0;
+                    break;
+                default:
+                    break;
+                }
+            break;
+            case 2:
+                switch (literal)
+                {
+                case "A":
+                    result = 3;
+                    break;
+                case "B":
+                case "C":
+                    result = 0;
+                    break;
+                default:
+                    break;
+                }
+            break;
+            case 3:
+                switch (literal)
+                {
+                case "A":
+                    result = 1;
+                    break;
+                case "B":
+                    result = 4;
+                    break;
+                case "C":
+                    result = 0;
+                    break;
+                default:
+                    break;
+                }
+            break;
+            case 4:
+                switch (literal)
+                {
+                case "A":
+                    result = 5;
+                    break;
+                case "B":
+                case "C":
+                    result = 0;
+                    break;
+                default:
+                    break;
+                }
+            break;
+            case 5:
+                switch (literal)
+                {
+                case "A":
+                    result = 1;
+                    break;
+                case "B":
+                    result = 4;
+                    break;
+                case "C":
+                    result = 6;
+                    break;
+                default:
+                    break;
+                }
+            break;
+        }
+        return result;
+    }
 }
 
-/*Эта функция осуществляет поиск совпадений условия в векторе строк.
-На входе вектор строк, на выходе - элементы вектора */
-void searcher()
-{
-	cout << "Совпадения: " << endl; //Вывести сообщение
-	for (int i = 0; i < vct.size()-1; i++) //От 1 до последнего элемента цикла выполнять
-	{
-		if (vct.at(i)[vct.at(i).size() - 1] == vct.at(i+1)[0]) //Если последний символ текущего слова равен первому символу следующего слова, то
-		{
-			cout << vct[i] << " " << vct[i+1] << endl; //Вывести оба слова
-		}
-	}
-}
 
-/*Это главная функция программы*/
-int main()
-{
-	setlocale(LC_ALL, "Russian"); //Установить русский язык в консоли
-	textseparator(); //Запустить выполнение функции void textseparator();
-	searcher(); //Запустить выполнение функции void searcher();
-	_getch(); //Задержать окно консоли
-	return 0; //Вернуть 0
+    public void getNewState(int literal)
+    {
+        Stack<int> stack = new Stack<int>();
+        int state = 0;
+        switch (state) 
+        {
+        case 0:
+            if (literal == 0) 
+                {
+                    state = 1;
+                    if (stack != null)
+                    {
+                        stack.Push(0);
+                    }
+                }   
+            else if((literal == null) && (stack == null)) 
+                {
+                state = 3;
+                }
+            break;
+        case 1:
+            if (literal == 0) 
+                {
+                if (stack[(stack.Count - 1)] == 0) 
+                    {
+                        stack.Push(0);
+                    }
+                 }
+            else if(literal == 1) 
+                {
+                if (stack[stack.Count - 1)] == 0) 
+                {
+                    state = 2;
+                        stack.Pop();
+                }
+            }
+            break;
+        case 2:
+            if (literal == 1) 
+                {
+                if (stack[stack.Count - 1)] == 0)
+                    {
+                        stack.Pop();
+                    }
+                }
+            else if((literal == null) && (stack == null)) 
+                {
+                state = 3;
+                }
+            break;
+        }
+    }
 }
